@@ -2,6 +2,8 @@ package com.example.springboottutorial.controllers;
 
 import com.example.springboottutorial.entities.User;
 import com.example.springboottutorial.services.UserService;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -26,7 +28,7 @@ public class UserController {
     }
 
     @GetMapping("/{id}")
-    public User getUserById(@PathVariable("id") Long userId) {
+    public User getUserById(@PathVariable("id") Long userId, HttpServletRequest request, HttpServletResponse response) {
         return userService.getUserById(userId);
     }
 
