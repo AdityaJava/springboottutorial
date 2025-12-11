@@ -1,0 +1,13 @@
+spring:
+  application:
+    name: springboottutorial
+  datasource:
+    username: root
+    url: jdbc:mysql://localhost:3306/book_shop?useSSl=false
+    password: rootpass
+  jpa:
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.MySQL5Dialect
+    hibernate:
+      ddl-auto: none

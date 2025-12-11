@@ -1,0 +1,50 @@
+package com.example.springboottutorial.entities;
+
+import org.springframework.validation.annotation.Validated;
+
+@Validated
+public class User {
+    private Long id;
+    private String name;
+    private String role;
+    private Integer age;
+
+    public User(Long id, String name, String role, Integer age) {
+        this.id = id;
+        this.name = name;
+        this.role = role;
+        this.age = age;
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public String getRole() {
+        return role;
+    }
+
+    public void setRole(String role) {
+        this.role = role;
+    }
+
+    public Integer getAge() {
+        return age;
+    }
+
+    public void setAge(Integer age) {
+        this.age = age;
+    }
+}
