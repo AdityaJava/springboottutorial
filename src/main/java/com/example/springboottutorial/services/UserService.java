@@ -1,36 +1,44 @@
 package com.example.springboottutorial.services;
 
 import com.example.springboottutorial.entities.User;
-import com.example.springboottutorial.inmemorydb.UserInMemoryDB;
+
+import com.example.springboottutorial.repository.UserRepository;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 
 @Service
 public class UserService {
-    UserInMemoryDB userInMemoryDB;
 
-    public UserService() {
-        userInMemoryDB = new UserInMemoryDB();
+    private final UserRepository userRepository;
+
+    @Autowired
+    public UserService(UserRepository userRepository) {
+        this.userRepository = userRepository;
     }
 
     public User getUserById(Long userId) {
-        return userInMemoryDB.getUserById(userId);
+        return userRepository.findById(userId).get();
     }
 
     public List<User> getAllUsers() {
-        return userInMemoryDB.getUsers();
+        return userRepository.findAll();
     }
 
     public User createUser(User user) {
-        return userInMemoryDB.createUser(user);
+        return userRepository.save(user);
     }
 
     public User updateUser(User updatedUser, Long userId) {
-        return userInMemoryDB.updateUser(updatedUser, userId);
+        User existingUser = getUserById(userId);
+        if (existingUser != null) {
+            return userRepository.save(updatedUser);
+        }
+        return null;
     }
 
     public void deleteUser(Long userId) {
-        userInMemoryDB.deleteUser(userId);
+        userRepository.deleteById(userId);
     }
 }
