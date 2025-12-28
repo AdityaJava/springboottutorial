@@ -2,6 +2,8 @@ package com.example.springboottutorial.controllers;
 
 import com.example.springboottutorial.entities.User;
 import com.example.springboottutorial.services.UserService;
+import com.example.springboottutorial.services.tax.TaxCalculatorService;
+import com.example.springboottutorial.services.tax.TaxFactory;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,9 +24,12 @@ public class UserController {
 
     private final UserService userService;
 
+    private final TaxFactory taxFactory;
+
     @Autowired
-    public UserController(UserService userService) {
+    public UserController(UserService userService, TaxFactory taxFactory) {
         this.userService = userService;
+        this.taxFactory = taxFactory;
     }
 
     @GetMapping("/{id}")
@@ -52,5 +57,11 @@ public class UserController {
         userService.deleteUser(userId);
     }
 
+    @PostMapping("/{id}/calculateTax")
+    public void calculateTax(@PathVariable("id") Long userId) {
+        User user = userService.getUserById(userId);
+        TaxCalculatorService taxCalculatorService = taxFactory.getServiceByCountry(user.getCountry());
+        taxCalculatorService.calculateTax(user);
+    }
 
 }
