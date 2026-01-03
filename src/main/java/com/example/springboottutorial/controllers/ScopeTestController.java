@@ -3,6 +3,7 @@ package com.example.springboottutorial.controllers;
 import com.example.springboottutorial.domain.PrototypeUserBean;
 import com.example.springboottutorial.domain.RequestUserBean;
 import com.example.springboottutorial.domain.SessionUserBean;
+import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -41,5 +42,10 @@ public class ScopeTestController {
         sessionUserBean.setLoggedInUser(name);
         return "Session Bean Hash: " + sessionUserBean.hashCode()
                 + ", User: " + sessionUserBean.getLoggedInUser();
+    }
+
+    @GetMapping("/session/logout")
+    public void logout(HttpSession session) {
+        session.invalidate();
     }
 }
