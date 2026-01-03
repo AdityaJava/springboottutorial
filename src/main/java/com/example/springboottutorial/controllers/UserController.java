@@ -1,11 +1,13 @@
 package com.example.springboottutorial.controllers;
 
+import com.example.springboottutorial.domain.ProductionBean;
 import com.example.springboottutorial.entities.User;
 import com.example.springboottutorial.services.UserService;
 import com.example.springboottutorial.services.tax.TaxCalculatorService;
 import com.example.springboottutorial.services.tax.TaxFactory;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import org.springframework.beans.factory.ObjectProvider;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -26,8 +28,9 @@ public class UserController {
 
     private final TaxFactory taxFactory;
 
+
     @Autowired
-    public UserController(UserService userService, TaxFactory taxFactory) {
+    public UserController(UserService userService, TaxFactory taxFactory, ObjectProvider<ProductionBean> productionBean) {
         this.userService = userService;
         this.taxFactory = taxFactory;
     }
