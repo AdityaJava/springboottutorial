@@ -1,6 +1,7 @@
 package com.example.springboottutorial.entities;
 
 import com.example.springboottutorial.domain.Country;
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
@@ -8,6 +9,8 @@ import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 
 import java.math.BigDecimal;
@@ -38,6 +41,7 @@ public class User {
 
     @Column(name = "tax")
     private BigDecimal tax;
+
 
     public User() {
 

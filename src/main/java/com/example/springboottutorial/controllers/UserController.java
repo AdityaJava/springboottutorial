@@ -9,6 +9,10 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.beans.factory.ObjectProvider;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.transaction.annotation.Isolation;
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
+import org.springframework.transaction.support.TransactionSynchronizationManager;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -61,9 +65,11 @@ public class UserController {
     }
 
     @PostMapping("/{id}/calculateTax")
-    public void calculateTax(@PathVariable("id") Long userId) {
+    @Transactional(propagation = Propagation.REQUIRED, isolation = Isolation.DEFAULT)
+    public void controllerCalculateTax(@PathVariable("id") Long userId) {
         User user = userService.getUserById(userId);
         TaxCalculatorService taxCalculatorService = taxFactory.getServiceByCountry(user.getCountry());
+        System.out.println(TransactionSynchronizationManager.getCurrentTransactionName());
         taxCalculatorService.calculateTax(user);
     }
 

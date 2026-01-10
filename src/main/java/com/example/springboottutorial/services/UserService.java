@@ -1,5 +1,6 @@
 package com.example.springboottutorial.services;
 
+import com.example.springboottutorial.annotations.MyAnnotation;
 import com.example.springboottutorial.entities.User;
 
 import com.example.springboottutorial.repository.UserRepository;
@@ -18,6 +19,7 @@ public class UserService {
         this.userRepository = userRepository;
     }
 
+  //  @MyAnnotation
     public User getUserById(Long userId) {
         return userRepository.findById(userId).get();
     }
@@ -36,6 +38,15 @@ public class UserService {
             return userRepository.save(updatedUser);
         }
         return null;
+    }
+
+    public void raiseException() {
+        /**
+         * Business logic
+         */
+
+        // Imagine Business logic fails
+        throw new RuntimeException();
     }
 
     public void deleteUser(Long userId) {
