@@ -4,9 +4,13 @@ import com.example.springboottutorial.annotations.MyAnnotation;
 import com.example.springboottutorial.entities.User;
 
 import com.example.springboottutorial.repository.UserRepository;
+import jakarta.persistence.EntityManager;
+import jakarta.persistence.PersistenceContext;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
+import java.math.BigDecimal;
 import java.util.List;
 
 @Service
@@ -19,7 +23,7 @@ public class UserService {
         this.userRepository = userRepository;
     }
 
-  //  @MyAnnotation
+    //  @MyAnnotation
     public User getUserById(Long userId) {
         return userRepository.findById(userId).get();
     }
@@ -28,6 +32,7 @@ public class UserService {
         return userRepository.findAll();
     }
 
+    @Transactional
     public User createUser(User user) {
         return userRepository.save(user);
     }
@@ -51,5 +56,11 @@ public class UserService {
 
     public void deleteUser(Long userId) {
         userRepository.deleteById(userId);
+    }
+
+    @Transactional
+    public void resetTax(Long id) {
+        User user = userRepository.findById(id).get();
+        user.setTax(BigDecimal.ZERO);
     }
 }

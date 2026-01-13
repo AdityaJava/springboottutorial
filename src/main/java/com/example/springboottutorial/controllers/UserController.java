@@ -41,6 +41,7 @@ public class UserController {
 
     @GetMapping("/{id}")
     public User getUserById(@PathVariable("id") Long userId, HttpServletRequest request, HttpServletResponse response) {
+        User user = userService.getUserById(userId);
         return userService.getUserById(userId);
     }
 
@@ -71,6 +72,11 @@ public class UserController {
         TaxCalculatorService taxCalculatorService = taxFactory.getServiceByCountry(user.getCountry());
         System.out.println(TransactionSynchronizationManager.getCurrentTransactionName());
         taxCalculatorService.calculateTax(user);
+    }
+
+    @PostMapping("/resetTax/{id}")
+    public void resetTax(@PathVariable Long id){
+        userService.resetTax(id);
     }
 
 }

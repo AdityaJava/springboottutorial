@@ -19,3 +19,6 @@ spring:
       roles:
         - ADMIN
         - USER
+
+server:
+  port: 8090
