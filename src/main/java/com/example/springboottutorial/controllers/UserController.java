@@ -44,7 +44,7 @@ public class UserController {
         User user = userService.getUserById(userId);
         return userService.getUserById(userId);
     }
-
+    //((org.springframework.web.context.request.ServletRequestAttributes) org.springframework.web.context.request.RequestContextHolder.getRequestAttributes()).getRequest().getHeader("Authorization")
     @GetMapping
     public List<User> getAllUsers() {
         return userService.getAllUsers();
