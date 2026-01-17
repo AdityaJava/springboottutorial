@@ -2,6 +2,8 @@ package com.example.springboottutorial.controllers;
 
 import com.example.springboottutorial.domain.ProductionBean;
 import com.example.springboottutorial.entities.User;
+import com.example.springboottutorial.DTO.UserDTO;
+import com.example.springboottutorial.filter.UserFilter;
 import com.example.springboottutorial.services.UserService;
 import com.example.springboottutorial.services.tax.TaxCalculatorService;
 import com.example.springboottutorial.services.tax.TaxFactory;
@@ -9,17 +11,23 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.beans.factory.ObjectProvider;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.transaction.annotation.Isolation;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.transaction.support.TransactionSynchronizationManager;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
@@ -44,10 +52,11 @@ public class UserController {
         User user = userService.getUserById(userId);
         return userService.getUserById(userId);
     }
+
     //((org.springframework.web.context.request.ServletRequestAttributes) org.springframework.web.context.request.RequestContextHolder.getRequestAttributes()).getRequest().getHeader("Authorization")
     @GetMapping
-    public List<User> getAllUsers() {
-        return userService.getAllUsers();
+    public Page<User> getAllUsers(Pageable pageable, @ModelAttribute UserFilter userFilter) {
+        return userService.getAllUsers(pageable, userFilter);
     }
 
     @PostMapping
@@ -78,5 +87,10 @@ public class UserController {
     public void resetTax(@PathVariable Long id){
         userService.resetTax(id);
     }
+
+//    @GetMapping("/test/queries/{city}")
+//    public List<UserDTO> get(String city, Pageable pageable, Sort sort) {
+//        return userService.get(city, pageable, sort);
+//    }
 
 }
